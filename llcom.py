@@ -54,7 +54,7 @@ class LLCom:
         self.main_mid_1(frame).pack(side=tk.LEFT, padx=5, pady=5)
         self.main_mid_2(frame).pack(side=tk.LEFT, padx=5, pady=5)
         self.main_mid_4(frame).pack(side=tk.RIGHT, padx=5, pady=5)
-        self.main_mid_3(frame).pack(side=tk.RIGHT, fill=tk.BOTH, padx=5, pady=5)
+        self.main_mid_3(frame).pack(side=tk.RIGHT, expand=tk.YES, fill=tk.BOTH, padx=5, pady=5)
 
         return frame
 

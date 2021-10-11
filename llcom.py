@@ -29,16 +29,18 @@ class LLCom:
 
     def __init__(self):
         self.window_ = tk.Tk()
-        center_window(self.window_, 500, 400)
+        center_window(self.window_, 600, 450)
         self.window_.title('LLCOM 串口调试工具 - 1.0.0')
         self.window_.grab_set()
         self.body()  # 绘制主体
+        self.window_.pack_propagate(True)
 
     def body(self):
         self.main_text(self.window_).pack(padx=5, pady=5, fill=tk.X)
+        # self.main_mid(self.window_).pack(fill=tk.X)
+        self.bottom(self.window_).pack(side=tk.BOTTOM, fill=tk.X)
+        self.main_bottom(self.window_).pack(side=tk.BOTTOM, fill=tk.X)
         self.main_mid(self.window_).pack(fill=tk.BOTH, expand=tk.YES)
-        self.main_bottom(self.window_).pack(fill=tk.X)
-        self.bottom(self.window_).pack(fill=tk.X)
 
     def main_text(self, parent):  # 绘制显示文本框
 
@@ -92,7 +94,7 @@ class LLCom:
 
     def main_bottom(self, parent):
         frame = tk.Frame(parent, bg='yellow')
-        self.main_bottom_1(frame).pack(side=tk.LEFT, fill=tk.Y, padx=7, pady=7)
+        self.main_bottom_1(frame).pack(side=tk.LEFT, fill=tk.Y, padx=7, pady=2)
         return frame
 
     def main_bottom_1(self, parent):

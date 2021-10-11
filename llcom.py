@@ -52,7 +52,7 @@ class LLCom:
 
     def main_mid(self, parent):
 
-        frame = tk.Frame(parent, bg='green')
+        frame = tk.Frame(parent)
         self.main_mid_1(frame).pack(side=tk.LEFT, padx=5, pady=5)
         self.main_mid_2(frame).pack(side=tk.LEFT, padx=5, pady=5)
         self.main_mid_4(frame).pack(side=tk.RIGHT, padx=5, pady=5)
@@ -93,8 +93,12 @@ class LLCom:
         return b
 
     def main_bottom(self, parent):
-        frame = tk.Frame(parent, bg='yellow')
+        frame = tk.Frame(parent)
         self.main_bottom_1(frame).pack(side=tk.LEFT, fill=tk.Y, padx=7, pady=2)
+        self.main_bottom_2(frame).pack(side=tk.LEFT, padx=1, pady=1)
+        self.main_bottom_3(frame).pack(side=tk.LEFT, padx=5, pady=1, fill=tk.X)
+        self.main_bottom_4(frame).pack(side=tk.LEFT, padx=1, pady=1)
+        self.main_bottom_5(frame).pack(side=tk.LEFT, padx=5, pady=1, fill=tk.X)
         return frame
 
     def main_bottom_1(self, parent):
@@ -104,6 +108,29 @@ class LLCom:
         b = tk.Button(parent, text='刷新串口', font=_font, height=1,
                       width=7, padx=1, pady=1, command=refresh_port)
         return b
+
+    def main_bottom_2(self, parent):
+
+        l = tk.Label(parent, text='串口：', font=('微软雅黑', 10))
+        return l
+
+    def main_bottom_3(self, parent):  # 串口下拉框
+
+        port_list = ['COM1', 'COM2', 'COM3', 'COM4']  # TODO 获取端口列表
+        self.port_cb = ttk.Combobox(parent, value=port_list)
+        return self.port_cb
+
+    def main_bottom_4(self, parent):
+
+        l = tk.Label(parent, text='波特率：', font=('微软雅黑', 10))
+        return l
+
+    def main_bottom_5(self, parent):  # 波特率下拉表
+
+        port_list = [9600, 115200]  # TODO 波特率
+        self.baudrate_cb = ttk.Combobox(parent, value=port_list)
+        self.baudrate_cb.current(1)
+        return self.baudrate_cb
 
     def bottom(self, parent):
         """窗体最下方留白"""

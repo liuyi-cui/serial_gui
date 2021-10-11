@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import serial
+from conserial import ConSerial
 import tkinter as tk
 from tkinter import ttk
 
@@ -28,6 +28,7 @@ def get_window_size(win, update=True):
 class LLCom:
 
     def __init__(self):
+        self.con = ConSerial()
         self.window_ = tk.Tk()
         center_window(self.window_, 600, 450)
         self.window_.title('LLCOM 串口调试工具 - 1.0.0')
@@ -46,6 +47,8 @@ class LLCom:
         frame = tk.Frame(parent)
 
         self.text_show = tk.Text(frame)
+        self.text_show.tag_config('warn', foreground='red')
+        self.text_show.tag_config('confirm', foreground='green')
         self.text_show.pack(fill=tk.X)
         return frame
 
@@ -62,7 +65,18 @@ class LLCom:
     def main_mid_1(self, parent):
 
         def open_port():  # TODO 连接设备
-            self.text_show.insert('end', '连接设备\n\n')
+            port = self.port_cb.get()
+            baudrate = int(self.baudrate_cb.get())
+            print(f'port: {port}, {type(port)}')
+            print(f'baudrate: {baudrate}, {type(baudrate)}')
+            if port:
+                port = port.split('-')[0].strip()
+                baudrate = int(baudrate)
+                self.con.open(port, baudrate)
+                print(self.con.con.inWaiting())
+                self.text_show.insert('end', '连接成功；\n\n', 'confirm')
+            else:
+                self.text_show.insert('end', '请选择端口；\n\n', 'warn')
 
         b = tk.Button(parent, text='打开\n串口', font=_font,
                       height=2, width=5, padx=1, pady=1, command=open_port)
@@ -103,7 +117,9 @@ class LLCom:
     def main_bottom_1(self, parent):
 
         def refresh_port():  # TODO 刷新串口
-            self.text_show.insert('end', '刷新串口\n\n')
+            port_list = self.con.get_list()  # 获取串口信息
+            self.port_cb['value'] = port_list  # 刷新串口下拉列表
+            self.port_cb.set('')
         b = tk.Button(parent, text='刷新串口', font=_font, height=1,
                       width=7, padx=1, pady=1, command=refresh_port)
         return b
@@ -115,8 +131,8 @@ class LLCom:
 
     def main_bottom_3(self, parent):  # 串口下拉框
 
-        port_list = ['COM1', 'COM2', 'COM3', 'COM4']  # TODO 获取端口列表
-        self.port_cb = ttk.Combobox(parent, value=port_list)
+        port_list = self.con.get_list()  # TODO 获取端口列表
+        self.port_cb = ttk.Combobox(parent, value=port_list, width=25)
         return self.port_cb
 
     def main_bottom_4(self, parent):

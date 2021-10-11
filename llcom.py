@@ -37,7 +37,6 @@ class LLCom:
 
     def body(self):
         self.main_text(self.window_).pack(padx=5, pady=5, fill=tk.X)
-        # self.main_mid(self.window_).pack(fill=tk.X)
         self.bottom(self.window_).pack(side=tk.BOTTOM, fill=tk.X)
         self.main_bottom(self.window_).pack(side=tk.BOTTOM, fill=tk.X)
         self.main_mid(self.window_).pack(fill=tk.BOTH, expand=tk.YES)
